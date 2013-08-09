@@ -12,7 +12,7 @@ public class JerseyClient {
 	
 	public JerseyClient(String service, String method){
 		Client client = Client.create();
-		webResource = client.resource("http://localhost:8080/JerseyExample/rest");
+		webResource = client.resource("http://localhost:9999/JerseyExample/rest");
 		webResource = webResource.path(service).path(method);
 	}
 
@@ -20,18 +20,16 @@ public class JerseyClient {
 		try {
 			new JerseyClient("hello", "get");
 
-			ClientResponse response = webResource.accept(MediaType.TEXT_HTML).get(ClientResponse.class);
+			ClientResponse response = webResource.path("html").accept(MediaType.TEXT_HTML).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "+ response.getStatus());
 			}
 
-			String output = response.getEntity(String.class);
-
 			System.out.println("Output from Server .... \n");
-			System.out.println("In HTML:\n" + output + "\n\n");
-			System.out.println("In XML:\n" + webResource.accept(MediaType.TEXT_XML).get(String.class) + "\n\n");
-			System.out.println("In Plain Text:\n" + webResource.accept(MediaType.TEXT_PLAIN).get(String.class));
+			System.out.println("In HTML:\n" + webResource.path("html").accept(MediaType.TEXT_HTML).get(String.class) + "\n\n");
+			System.out.println("In XML:\n" + webResource.path("xml").accept(MediaType.TEXT_XML).get(String.class) + "\n\n");
+			System.out.println("In Plain Text:\n" + webResource.path("plain").accept(MediaType.TEXT_PLAIN).get(String.class));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,10 +37,12 @@ public class JerseyClient {
 	
 	public void userService(String format, int userID){
 		ClientResponse response;
-		if(userID == 0)
-			response = webResource.accept(format).get(ClientResponse.class);
+		if(userID != 0)
+			response = webResource.path(format.substring(format.indexOf("/")))
+					.path("" + userID).accept(format).get(ClientResponse.class);
 		else
-			response = webResource.path("" + userID).accept(format).get(ClientResponse.class);
+			response = webResource.path(format.substring(format.indexOf("/")))
+					.accept(format).get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "+ response.getStatus());

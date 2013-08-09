@@ -6,7 +6,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class JerseyServer {
 
-	static final String BASE_URI = "http://localhost:8080/JerseyExample/rest/";
+	static final String BASE_URI = "http://localhost:9999/JerseyExample/rest/";
 
 	public static void main(String[] args) {
 		try {

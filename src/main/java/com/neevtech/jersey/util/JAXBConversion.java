@@ -59,18 +59,37 @@ public class JAXBConversion {
 		new JerseyClient("user", "get").userService(MediaType.TEXT_HTML, 1);
 		new JerseyClient("user", "get").userService(MediaType.TEXT_PLAIN, 2);
 		new JerseyClient("user", "get").userService(MediaType.TEXT_XML, 0);
+		new JerseyClient("user", "get").userService(MediaType.TEXT_XML, 1);
 	}
 	
-	public Users unmarshalling() {
-		Users users2 = null;
+	public User unmarshalling(int id) {
+		Users users = null;
+		User user = null;
 		try{			
 			Unmarshaller um = jaxbContext.createUnmarshaller();
-			users2 = (Users) um.unmarshal(new FileReader(USERS_XML));
+			users = (Users) um.unmarshal(new FileReader(USERS_XML));
 		} catch(JAXBException ex){
 			ex.printStackTrace();
 		} catch(IOException ex){
 			ex.printStackTrace();
 		}
-		return users2;
+		for (User obj : users.getUserList()) {
+			if(obj.getUserID() == id)
+				user = obj;
+		}
+		return user;
+	}
+	
+	public Users unmarshalling() {
+		Users users = null;
+		try{			
+			Unmarshaller um = jaxbContext.createUnmarshaller();
+			users = (Users) um.unmarshal(new FileReader(USERS_XML));
+		} catch(JAXBException ex){
+			ex.printStackTrace();
+		} catch(IOException ex){
+			ex.printStackTrace();
+		}
+		return users;
 	}
 }

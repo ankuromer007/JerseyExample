@@ -9,21 +9,21 @@ import javax.ws.rs.core.MediaType;
 public class HelloService {
 
 	@GET
-	@Path("/get")
+	@Path("/get/plain")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String sayPlainTextHello() {
 		return "Hello Jersey";
 	}
 
 	@GET
-	@Path("/get")
+	@Path("/get/xml")
 	@Produces(MediaType.TEXT_XML)
 	public String sayXMLHello() {
 		return "<?xml version=\"1.0\"?>\n\t" + "<hello> Hello Jersey " + "</hello>";
 	}
 
 	@GET
-	@Path("/get")
+	@Path("/get/html")
 	@Produces(MediaType.TEXT_HTML)
 	public String sayHtmlHello() {
 		return "<html>\n\t" + "<title>" + "Hello Jersey" + "</title>\n\t"

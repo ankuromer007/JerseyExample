@@ -14,51 +14,52 @@ import com.neevtech.jersey.util.JAXBConversion;
 public class UserService {
 
 	@GET
-	@Path("/get/{a}")
+	@Path("/get/plain/{a}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getPlainTextUserInfo(@PathParam("a") int id) {
-		Users users = (new JAXBConversion()).unmarshalling();
+		User user = (new JAXBConversion()).unmarshalling(id);
 		String output = "";
-		for (User user : users.getUserList()) {
-			if(user.getUserID() == id) {				
-				output = "User with id: " + user.getUserID()
-						+ ", name: " + user.getName() + ", age: "
-						+ user.getAge() + " and location: "
-						+ user.getLocation();
-			}
-		}
-		if(output.length() == 0)
+		if(user != null) {
+			output = "User with id: " + user.getUserID()
+					+ ", name: " + user.getName() + ", age: "
+					+ user.getAge() + " and location: "
+					+ user.getLocation();
+		}else
 			output = "User not found with the given ID.";
 		return output;
 	}
 
 	@GET
-	@Path("/get")
+	@Path("/get/html/{a}")
+	@Produces(MediaType.TEXT_HTML)
+	public String getHtmlUserInfo(@PathParam("a") int id) {
+		User user = (new JAXBConversion()).unmarshalling(id);
+		String output = "";
+		if(user != null) {
+			output = "<html><title>Hello User</title><body><h1>Hello User</h1><p>Name: "
+					+ user.getName()
+					+ "<br>ID: "
+					+ user.getUserID()
+					+ "<br>Age: "
+					+ user.getAge()
+					+ "<br>Location: "
+					+ user.getLocation() + "</p></body></html>";
+		}else
+			output = "User not found with the given ID.";
+		return output;
+	}
+	
+	@GET
+	@Path("/get/xml/{a}")
+	@Produces(MediaType.TEXT_XML)
+	public User getXMLUserInfo(@PathParam("a") int id) {
+		return (new JAXBConversion()).unmarshalling(id);
+	}
+	
+	@GET
+	@Path("/get/xml")
 	@Produces(MediaType.TEXT_XML)
 	public Users getXMLUserInfo() {
 		return (new JAXBConversion()).unmarshalling();
-	}
-
-	@GET
-	@Path("/get/{a}")
-	@Produces(MediaType.TEXT_HTML)
-	public String getHtmlUserInfo(@PathParam("a") int id) {
-		Users users = (new JAXBConversion()).unmarshalling();
-		String output = "";
-		for (User user : users.getUserList()) {
-			if(user.getUserID() == id) {
-				output = "<html><title>Hello User</title><body><h1>Hello User</h1><p>Name: "
-						+ user.getName()
-						+ "<br>ID: "
-						+ user.getUserID()
-						+ "<br>Age: "
-						+ user.getAge()
-						+ "<br>Location: "
-						+ user.getLocation() + "</p></body></html>";
-			}
-		}
-		if(output.length() == 0)
-			output = "User not found with the given ID.";
-		return output;
 	}
 }
