@@ -12,7 +12,7 @@ public class JerseyClient {
 	
 	public JerseyClient(String service, String method){
 		Client client = Client.create();
-		webResource = client.resource("http://localhost:9999/JerseyExample/rest");
+		webResource = client.resource("http://localhost:9090/JerseyExample/rest");
 		webResource = webResource.path(service).path(method);
 	}
 
