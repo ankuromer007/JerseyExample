@@ -50,6 +50,6 @@ public class JerseyClient {
 
 		String output = response.getEntity(String.class);
 		System.out.println("Output from Server .... \n");
-		System.out.println("In " + format + ":\n" + output);
+		System.out.println("In " + format + ":\n" + output + "\n");
 	}
 }

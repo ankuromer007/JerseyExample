@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Users {
 	private ArrayList<User> userList;
 
-	@XmlElementWrapper(name = "userList")
+	@XmlElementWrapper(name = "user-list")
 	@XmlElement(name = "user")
 	public ArrayList<User> getUserList() {
 		return userList;

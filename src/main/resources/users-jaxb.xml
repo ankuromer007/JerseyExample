@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:users xmlns:ns2="com.neevtech.jersey.model">
-    <userList>
+    <user-list>
         <user>
             <name>ankur</name>
             <user-id>1</user-id>
@@ -13,5 +13,5 @@
             <age>25</age>
             <location>Lucknow</location>
         </user>
-    </userList>
+    </user-list>
 </ns2:users>
